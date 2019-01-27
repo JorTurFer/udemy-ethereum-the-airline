@@ -1,4 +1,3 @@
-
 const Airline = artifacts.require("Airline");
 
 let instance;
@@ -58,5 +57,22 @@ contract("Airline",accounts =>{
         let newAirlineBalance = await instance.getAirlineBalance();
 
         assert.equal(newAirlineBalance.toNumber(),price.toNumber()+price2.toNumber());
+    });
+
+    it("should allow cusatomers to redeem loyalty points",async()=>{
+        let flight = await instance.flights(1);
+        let price = flight[1];
+
+        await instance.buyFlight(1,{from: accounts[0], value: price});            
+
+        
+        let balance = await web3.eth.getBalance(accounts[0]);
+        await instance.redeemLoyaltyPoints({from: accounts[0]});
+        let finalBalance = await web3.eth.getBalance(accounts[0]);
+
+        let customer = await instance.customers(accounts[0]);
+        let loyaltyPoints = customer[0];
+        assert(loyaltyPoints,0);
+        assert(finalBalance > balance);
     });
 });
