@@ -20,7 +20,7 @@ contract Airline{
 
     event FlightPurchased(address indexed customer,uint price);
 
-    constructor(){
+    constructor() public{
         owner = msg.sender;
         flights.push(Flight("Tokio", 4 ether));
         flights.push(Flight("Germany", 1 ether));
@@ -28,7 +28,7 @@ contract Airline{
     }
 
     function buyFlight(uint flightIndex) public payable{
-        Flight flight = flights[flightIndex];
+        Flight storage flight = flights[flightIndex];
         require(msg.value == flight.price);
 
         Customer storage customer = customers[msg.sender];
