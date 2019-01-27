@@ -52,4 +52,14 @@ contract Airline{
         msg.sender.transfer(etherToRefound);
         customer.loyaltyPoints = 0;
     }
+
+    function getAirlineBalance() public isOwner view returns(uint){
+        address airlineAddress = this;
+        return airlineAddress.balance;
+    }
+
+    modifier isOwner(){
+        require(msg.sender == owner);
+        _;
+    }
 }
