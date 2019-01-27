@@ -49,8 +49,11 @@ export class App extends Component {
         });
     }
 
-    async buyFlight(flightIncex, flight){
-        //this.airlineService.buyFlight()
+    async buyFlight(flightIndex, flight){
+        await this.airlineService.buyFlight(
+            flightIndex,
+            this.state.account,
+            flight.price);
     }
 
     async load(){
