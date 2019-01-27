@@ -12,6 +12,8 @@ contract Airline{
         uint price;
     }
 
+    uint etherPerPoint = 0.5 ether;
+
     Flight[] public flights;
 
     mapping(address => Customer) public customers;
@@ -28,7 +30,7 @@ contract Airline{
     }
 
     function buyFlight(uint flightIndex) public payable{
-        Flight storage flight = flights[flightIndex];
+        Flight memory flight = flights[flightIndex];
         require(msg.value == flight.price);
 
         Customer storage customer = customers[msg.sender];
@@ -38,5 +40,16 @@ contract Airline{
         sustomerTotalFlights[msg.sender] ++;
 
         FlightPurchased(msg.sender,flight.price);
+    }
+
+    function totalFlights() public view returns (uint){
+        return flights.length;
+    }
+
+    function redeemLoyaltyPoints() public{
+        Customer storage customer = customers[msg.sender];
+        uint etherToRefound = etherPerPoint * customer.loyaltyPoints;
+        msg.sender.transfer(etherToRefound);
+        customer.loyaltyPoints = 0;
     }
 }
