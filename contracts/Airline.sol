@@ -18,7 +18,7 @@ contract Airline{
 
     mapping(address => Customer) public customers;
     mapping(address => Flight[]) public customerFlights;
-    mapping(address => uint) public sustomerTotalFlights;
+    mapping(address => uint) public customerTotalFlights;
 
     event FlightPurchased(address indexed customer,uint price);
 
@@ -37,7 +37,7 @@ contract Airline{
         customer.loyaltyPoints += 5;
         customer.totalFlights += 1;
         customerFlights[msg.sender].push(flight);
-        sustomerTotalFlights[msg.sender] ++;
+        customerTotalFlights[msg.sender] ++;
 
         FlightPurchased(msg.sender,flight.price);
     }

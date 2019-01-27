@@ -13,4 +13,14 @@ contract("Airline",accounts =>{
         let total = await instance.totalFlights();
         assert(total > 0);
     });
+
+    it("should allow customers to buy a flights providing its value",async () =>{
+        let flight = await instance.flights(0);
+        let flightName = flight[0];
+        let price = flight[1];
+
+        await instance.buyFlight(0,{from: accounts[0], value: price});
+        let customerFlight = await instance.customerFlights(accounts[0],0);
+        let customerTotalFlights = await instance.customerTotalFlights(accounts[0]);
+    });
 });
