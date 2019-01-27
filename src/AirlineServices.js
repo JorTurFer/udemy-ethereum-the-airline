@@ -8,14 +8,14 @@ export class AirlineService{
         let total = await this.getTotalFlights();
         let flights = [];
         for(var i = 0; i < total; i++){
-            let flight = await this.contract.getFlights(i);
+            let flight = await this.contract.flights(i);
             flights.push(flight);
         }
         return this.mapFlights(flights);
     }
 
     async getTotalFlights(){
-        return (await this.contract.getTotalFlights()).toNumber();
+        return (await this.contract.totalFlights()).toNumber();
     }
 
     mapFlights(flights){
