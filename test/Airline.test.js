@@ -27,4 +27,19 @@ contract("Airline",accounts =>{
         assert(customerFlight[1],price);
         assert(customerTotalFlights,1);
     });
+
+    it("should not allow customers to buy a flights under the price",async () =>{
+        let flight = await instance.flights(0);
+        let price = flight[1] - 5000;
+
+        try
+        {        
+            await instance.buyFlight(0,{from: accounts[0], value: price});            
+        }
+        catch(ex) 
+        {
+            return;
+        }
+        assert.fail();        
+    });
 });
