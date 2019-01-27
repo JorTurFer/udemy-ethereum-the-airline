@@ -35,11 +35,6 @@ export class App extends Component {
         });
     }
 
-    async load(){
-        this.getBalance();
-        this.getFlights();
-    }       
-
     async getBalance(){
         let weiBalance = await this.web3.eth.getBalance(this.state.account);
         this.setState({
@@ -53,6 +48,17 @@ export class App extends Component {
             flights
         });
     }
+
+    async buyFlight(flightIncex, flight){
+        //this.airlineService.buyFlight()
+    }
+
+    async load(){
+        this.getBalance();
+        this.getFlights();
+    }       
+
+
 
     render() {
         return <React.Fragment>
@@ -79,6 +85,7 @@ export class App extends Component {
                         {this.state.flights.map((flight,i) => {
                             return <div key={i}>
                                         <span>{flight.name} - cost: {this.toEther(flight.price)}</span>
+                                        <button className="btn btn-sm btn-success text-white" onClick={()=> this.buyFlight(i,flight)}>Purchase</button>
                                     </div>
                         })}
                     </Panel>
