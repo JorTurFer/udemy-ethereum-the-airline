@@ -12,7 +12,11 @@ contract Airline{
         uint price;
     }
 
+    Flight[] public flights;
     constructor(){
         owner = msg.sender;
+        flights.push(Flight("Tokio", 4 ether));
+        flights.push(Flight("Germany", 1 ether));
+        flights.push(Flight("Madrid", 2 ether));
     }
 }
